@@ -1,0 +1,1 @@
+export { SideMenuPattern } from "./SideMenuPattern";

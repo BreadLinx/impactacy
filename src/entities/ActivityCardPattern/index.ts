@@ -1,0 +1,1 @@
+export { ActivityCardPattern } from "./ActivityCardPattern";
