@@ -9,10 +9,10 @@ import {
 } from "react-icons/bi";
 import { Button } from "shared/Button";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 import { SideMenuLink } from "features/SideMenuLink";
 import { SideMenuProfile } from "features/SideMenuProfile";
 import { SideMenuPattern } from "entities/SideMenuPattern";
+import { useAuth, AuthStatus } from "modules/auth";
 
 interface SideMenuProps {
   logo: ReactElement;
@@ -20,13 +20,13 @@ interface SideMenuProps {
 
 export const SideMenu: FC<SideMenuProps> = ({ logo }) => {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { session, update } = useAuth();
 
   if (typeof session === "undefined") {
     return <SideMenuPattern logo={logo} />;
   }
 
-  if (!session) {
+  if (session.status !== AuthStatus.Authenticated) {
     return (
       <SideMenuPattern
         logo={logo}
@@ -95,10 +95,10 @@ export const SideMenu: FC<SideMenuProps> = ({ logo }) => {
             text="Charity"
           />
           <SideMenuLink
-            href={`/${session.user.id}`}
+            href={`/${session.user?._id}`}
             icon={<BiUser size={"30px"} />}
             isActive={
-              router.asPath.startsWith(`/${session.user.id}`) ||
+              router.asPath.startsWith(`/${session.user?._id}`) ||
               router.asPath.startsWith("/account")
             }
             text="Profile"

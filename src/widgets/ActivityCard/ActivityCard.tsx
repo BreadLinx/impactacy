@@ -13,7 +13,7 @@ import { ActionButton } from "features/ActionButton";
 import { DateFeature } from "features/DateFeature";
 import { PostProfileBlock } from "features/PostProfileBlock";
 import { IActivity } from "types/types";
-import { authApi } from "lib/ky/options";
+import { api } from "modules/axios/config";
 import { useSession } from "next-auth/react";
 import * as S from "./styles";
 
@@ -64,7 +64,7 @@ export const ActivityCard: FC<ActivityCardProps> = ({
                 if (!session) {
                   return;
                 }
-                authApi.put(`activities/${activity._id}/likes`, {
+                api.put(`activities/${activity._id}/likes`, {
                   headers: {
                     authorization: `Bearer ${session?.user.authToken}`,
                   },
@@ -80,7 +80,7 @@ export const ActivityCard: FC<ActivityCardProps> = ({
                 if (!session) {
                   return;
                 }
-                authApi.delete(`activities/${activity._id}/likes`, {
+                api.delete(`activities/${activity._id}/likes`, {
                   headers: {
                     authorization: `Bearer ${session?.user.authToken}`,
                   },
@@ -102,7 +102,7 @@ export const ActivityCard: FC<ActivityCardProps> = ({
                 if (!session) {
                   return;
                 }
-                authApi.put(`activities/${activity._id}/dislikes`, {
+                api.put(`activities/${activity._id}/dislikes`, {
                   headers: {
                     authorization: `Bearer ${session?.user.authToken}`,
                   },
@@ -118,7 +118,7 @@ export const ActivityCard: FC<ActivityCardProps> = ({
                 if (!session) {
                   return;
                 }
-                authApi.delete(`activities/${activity._id}/dislikes`, {
+                api.delete(`activities/${activity._id}/dislikes`, {
                   headers: {
                     authorization: `Bearer ${session?.user.authToken}`,
                   },

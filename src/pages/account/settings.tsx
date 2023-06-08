@@ -1,9 +1,8 @@
 import { GetServerSideProps } from "next";
-import { FC, ReactElement } from "react";
-import { getServerSession } from "next-auth";
+import { ReactElement } from "react";
 import { MainLayout } from "layouts/MainLayout";
 import { NextPageWithLayout } from "types/types";
-import { signIn } from "next-auth/react";
+import { Button } from "shared/Button";
 
 interface PageProps {}
 
@@ -56,7 +55,11 @@ export const getServerSideProps: GetServerSideProps<{
 };
 
 const Page: NextPageWithLayout<PageProps> = ({}) => {
-  return <div>123</div>;
+  return (
+    <>
+      <Button>Link Google</Button>
+    </>
+  );
 };
 
 Page.getLayout = (page: ReactElement) => {

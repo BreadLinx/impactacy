@@ -3,7 +3,6 @@ import { ReactElement, useEffect } from "react";
 import { NextPageWithLayout, IUser, IActivity } from "types/types";
 import { MainLayout } from "layouts/MainLayout";
 import { GetServerSideProps } from "next";
-import { api } from "lib/ky/options";
 import { ActivityCard } from "widgets/ActivityCard";
 import { useSession } from "next-auth/react";
 

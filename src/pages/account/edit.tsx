@@ -3,7 +3,7 @@ import { FC, ReactElement } from "react";
 import { getServerSession } from "next-auth";
 import { MainLayout } from "layouts/MainLayout";
 import { NextPageWithLayout } from "types/types";
-import { useSession } from "next-auth/react";
+import { useAuth } from "modules/auth";
 
 interface PageProps {}
 
@@ -56,9 +56,9 @@ export const getServerSideProps: GetServerSideProps<{
 };
 
 const Page: NextPageWithLayout<PageProps> = ({}) => {
-  const { data: session } = useSession();
+  const { session } = useAuth();
 
-  return <div>{session?.user.name}</div>;
+  return <div>{session.user?.name}</div>;
 };
 
 Page.getLayout = (page: ReactElement) => {

@@ -18,7 +18,6 @@ export const MainLayout: FC<MainLayoutProps> = ({ children, title }) => {
         {children}
       </S.Main>
       <S.Aside>Поиск</S.Aside>
-      <Toaster position="bottom-right" />
     </S.PageWrapper>
   );
 };

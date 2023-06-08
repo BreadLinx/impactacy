@@ -26,7 +26,7 @@ const Page: NextPageWithLayout<PageProps> = ({}) => {
         );
 
         if (result.data.success) {
-          toast.success("Signing in successfully");
+          toast.success("Signed in successfully");
           router.replace("/");
         } else {
           toast.error("Signing in failed, try again");

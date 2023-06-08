@@ -11,6 +11,7 @@ export interface IUser {
   email: string;
   image: string;
   emailVerified: boolean | null;
+  __v: number;
 }
 
 export interface IActivity {

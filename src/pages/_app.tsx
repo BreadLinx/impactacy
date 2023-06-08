@@ -1,27 +1,20 @@
 import type { AppProps } from "next/app";
 import GlobalStyle from "styles/globalStyles";
-import { SessionProvider } from "next-auth/react";
 import { NextPageWithLayout } from "types/types";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import { ThemeProvider as MuiThemeProvider, CssBaseline } from "@mui/material";
-import { ThemeProvider, DefaultTheme } from "styled-components";
-import lightTheme from "styles/theme/lightTheme";
+import { ThemeProvider } from "styled-components";
+import { lightMuiTheme } from "styles/mui-themes/lightTheme";
 import createCache from "@emotion/cache";
 import { FC } from "react";
 import { Toaster } from "react-hot-toast";
+import { lightStyledTheme } from "styles/styled-themes/lightTheme";
 
 const createEmotionCache = () => {
   return createCache({ key: "css", prepend: true });
 };
 
 const clientSideEmotionCache = createEmotionCache();
-
-const theme: DefaultTheme = {
-  colors: {
-    primary: "#111",
-    secondary: "#0070f3",
-  },
-};
 
 interface AppPropsWithLayout extends AppProps {
   Component: NextPageWithLayout;
@@ -38,14 +31,12 @@ const MyApp: FC<AppPropsWithLayout> = ({
   return (
     <>
       <CacheProvider value={emotionCache}>
-        <ThemeProvider theme={theme}>
-          <MuiThemeProvider theme={lightTheme}>
+        <ThemeProvider theme={lightStyledTheme}>
+          <MuiThemeProvider theme={lightMuiTheme}>
             <GlobalStyle />
             <CssBaseline />
-            <Toaster position="top-right" />
-            <SessionProvider session={pageProps.session}>
-              {getLayout(<Component {...pageProps} />)}
-            </SessionProvider>
+            <Toaster position="bottom-right" />
+            {getLayout(<Component {...pageProps} />)}
           </MuiThemeProvider>
         </ThemeProvider>
       </CacheProvider>

@@ -5,13 +5,14 @@ import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import { IUser } from "types/types";
 import { useRouter } from "next/router";
+import { useAuth } from "modules/auth";
 
 interface ProfileSectionProps {
   user: IUser;
 }
 
 export const ProfileSection: FC<ProfileSectionProps> = ({ user }) => {
-  const { data: session } = useSession();
+  const { session } = useAuth();
   const router = useRouter();
 
   return (
@@ -22,7 +23,7 @@ export const ProfileSection: FC<ProfileSectionProps> = ({ user }) => {
         <S.RestInfo>Rostov-on-Don, Russia</S.RestInfo>
         <S.RestInfo>1.2M followers</S.RestInfo>
       </S.ProfileNameBox>
-      {session?.user.id === user?._id ? (
+      {session.user?._id === user?._id ? (
         <S.ProfileButtonsBox>
           <Button
             variant="outlined"

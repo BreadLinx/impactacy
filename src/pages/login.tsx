@@ -1,12 +1,9 @@
-import { FC, ReactElement, useEffect, useState } from "react";
-import { SignInLayout } from "layouts/SignInLayout/SignInLayout";
+import { useEffect, useState } from "react";
 import { NextPageWithLayout } from "types/types";
 import * as S from "@pages-styles/login/styles";
 import { FcGoogle } from "react-icons/fc";
 import { AiFillApple } from "react-icons/ai";
 import { BsFacebook } from "react-icons/bs";
-import { useSession, signIn, signOut } from "next-auth/react";
-import { Input } from "shared/Input/Input";
 import {
   InputLabel,
   FormControl,
@@ -22,10 +19,9 @@ import * as Yup from "yup";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
-import { Session, getServerSession } from "next-auth";
-import { authOptions } from "lib/next-auth/options";
-import axios from "axios";
 import { toast } from "react-hot-toast";
+import { getServerUser } from "modules/auth/auth";
+import { useAuth, AuthProviders, AuthStatus } from "modules/auth";
 
 const SigninSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email required"),
@@ -35,12 +31,12 @@ const SigninSchema = Yup.object().shape({
 interface PageProps {}
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  const session = await getServerSession(context.req, context.res, authOptions);
+  const result = await getServerUser(context.req.headers.cookie);
 
-  if (session?.user.email) {
+  if (result?.email) {
     return {
       redirect: {
-        destination: "/profile",
+        destination: `/${result._id}`,
         permanent: false,
       },
     };
@@ -53,6 +49,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
 
 const Page: NextPageWithLayout<PageProps> = ({}) => {
   const router = useRouter();
+  const { signIn, session } = useAuth();
 
   const { error } = router.query;
   useEffect(() => {
@@ -61,10 +58,11 @@ const Page: NextPageWithLayout<PageProps> = ({}) => {
     }
   }, [error]);
 
+  if (session.status === AuthStatus.Authenticated) {
+    router.push(`/${session.user?._id}`);
+  }
+
   const handleGoogleSignIn = async () => {
-    // signIn("google", { callbackUrl: "http://localhost:3000" });
-    // const result = await axios.get("http://localhost:5000/signin/google");
-    // console.log(result);
     router.push("http://localhost:5000/signin/google");
   };
 
@@ -73,17 +71,11 @@ const Page: NextPageWithLayout<PageProps> = ({}) => {
       email: "",
       password: "",
     },
-    onSubmit: async values => {
-      const result = await signIn("credentials", {
-        redirect: false,
-        email: values.email,
-        password: values.password,
-        callbackUrl: "/",
+    onSubmit: async ({ email, password }) => {
+      signIn({
+        email,
+        password,
       });
-
-      if (result?.ok) {
-        router.push(result.url || "/");
-      }
     },
     validationSchema: SigninSchema,
   });

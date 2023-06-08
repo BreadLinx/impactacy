@@ -1,4 +1,4 @@
-import { FC, ReactElement, useState } from "react";
+import { FC, ReactElement, useEffect, useState } from "react";
 import { SignInLayout } from "layouts/SignInLayout/SignInLayout";
 import { NextPageWithLayout } from "types/types";
 import * as S from "@pages-styles/signup/styles";
@@ -20,6 +20,8 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Link from "next/link";
+import { useAuth, AuthProviders, AuthStatus } from "modules/auth";
+import { useRouter } from "next/router";
 
 const SignupSchema = Yup.object().shape({
   name: Yup.string()
@@ -35,9 +37,16 @@ const SignupSchema = Yup.object().shape({
 interface PageProps {}
 
 const Page: NextPageWithLayout<PageProps> = ({}) => {
+  const router = useRouter();
+  const { session, signUp, signInWithProvider } = useAuth();
+
   const handleGoogleSignIn = async () => {
-    signIn("google", { callbackUrl: "http://localhost:3000" });
+    signInWithProvider(AuthProviders.Google);
   };
+
+  if (session.status === AuthStatus.Authenticated) {
+    router.push(`/${session.user?._id}`);
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -45,8 +54,12 @@ const Page: NextPageWithLayout<PageProps> = ({}) => {
       email: "",
       password: "",
     },
-    onSubmit: values => {
-      console.log(values);
+    onSubmit: ({ name, password, email }) => {
+      signUp({
+        name,
+        email,
+        password,
+      });
     },
     validationSchema: SignupSchema,
   });
@@ -117,12 +130,10 @@ const Page: NextPageWithLayout<PageProps> = ({}) => {
       <Button
         fullWidth
         variant="outlined"
-        onClick={() => {
-          handleGoogleSignIn();
-        }}
+        onClick={handleGoogleSignIn}
         sx={{ gap: "20px" }}
       >
-        <FcGoogle size={20} /> Sign up with Google
+        <FcGoogle size={20} /> Sign in with Google
       </Button>
       <Link href="/login">Sign in</Link>
     </S.Container>

@@ -1,12 +1,9 @@
-import { FC, ReactElement } from "react";
+import { ReactElement } from "react";
 import { useRouter } from "next/router";
 import { NextPageWithLayout, IUser } from "types/types";
 import { MainLayout } from "layouts/MainLayout";
 import Head from "next/head";
-import { Session, getServerSession } from "next-auth";
 import { GetServerSideProps } from "next";
-import { authOptions } from "lib/next-auth/options";
-import { ActivityCard } from "widgets/ActivityCard/ActivityCard";
 import { ProfileSection } from "widgets/ProfileSection";
 import { ProfilePageTabs } from "features/ProfilePageTabs";
 

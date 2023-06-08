@@ -1,22 +1,19 @@
 import Head from "next/head";
 import { GetServerSideProps } from "next";
-import { ReactElement, useEffect } from "react";
+import { ReactElement } from "react";
 import { NextPageWithLayout } from "types/types";
 import { MainLayout } from "layouts/MainLayout";
-import { ActivityCard } from "widgets/ActivityCard";
-import { authOptions } from "lib/next-auth/options";
-import { getServerSession } from "next-auth";
 
 export const getServerSideProps: GetServerSideProps<{}> = async context => {
-  const session = await getServerSession(context.req, context.res, authOptions);
-  if (!session?.user.email) {
-    return {
-      redirect: {
-        destination: "/activity",
-        permanent: false,
-      },
-    };
-  }
+  // const session = await getServerSession(context.req, context.res, authOptions);
+  // if (!session?.user.email) {
+  //   return {
+  //     redirect: {
+  //       destination: "/activity",
+  //       permanent: false,
+  //     },
+  //   };
+  // }
 
   return { props: {} };
 };
