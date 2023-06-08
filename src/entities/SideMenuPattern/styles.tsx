@@ -15,6 +15,7 @@ export const Header = styled.header<HeaderProps>`
   max-height: 100vh;
   padding: 20px 10px 20px 30px;
   overflow-y: overlay;
+  overflow-x: hidden;
 
   &::-webkit-scrollbar {
     width: ${({ isHover }) => (isHover ? "5px" : "0px")};

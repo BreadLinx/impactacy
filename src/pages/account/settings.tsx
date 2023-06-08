@@ -3,6 +3,7 @@ import { ReactElement } from "react";
 import { MainLayout } from "layouts/MainLayout";
 import { NextPageWithLayout } from "types/types";
 import { Button } from "shared/Button";
+import { AccountLinkingSection } from "widgets/AccountLinkingSection";
 
 interface PageProps {}
 
@@ -55,11 +56,7 @@ export const getServerSideProps: GetServerSideProps<{
 };
 
 const Page: NextPageWithLayout<PageProps> = ({}) => {
-  return (
-    <>
-      <Button>Link Google</Button>
-    </>
-  );
+  return <AccountLinkingSection />;
 };
 
 Page.getLayout = (page: ReactElement) => {
