@@ -1,9 +1,9 @@
 import Head from "next/head";
 import { ReactElement } from "react";
-import { NextPageWithLayout, IUser, IActivity } from "types/types";
-import { MainLayout } from "layouts/MainLayout";
+import { NextPageWithLayout, IActivity } from "@app-types";
+import { MainLayout } from "layouts/main-layout";
 import { GetServerSideProps } from "next";
-import { ActivityCard } from "widgets/ActivityCard";
+import { ActivityCard } from "widgets/activity-card";
 
 interface PageProps {
   activity: IActivity;

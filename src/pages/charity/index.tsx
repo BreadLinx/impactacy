@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { ReactElement } from "react";
-import { NextPageWithLayout } from "types/types";
-import { MainLayout } from "layouts/MainLayout";
+import { NextPageWithLayout } from "@app-types";
+import { MainLayout } from "layouts/main-layout";
 
 interface PageProps {}
 

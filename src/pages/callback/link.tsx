@@ -1,18 +1,29 @@
 import Head from "next/head";
-import { ReactElement, useEffect } from "react";
-import { NextPageWithLayout } from "types/types";
+import { useEffect } from "react";
+import { NextPageWithLayout } from "@app-types";
 import { GetServerSideProps } from "next";
-import axios from "axios";
-import { LizaLoader } from "shared/LizaLoader";
+import { LizaLoader } from "shared/liza-loader";
 import { useRouter } from "next/router";
-import * as S from "styles/pages-styles/auth-callback/styles";
+import * as S from "screens/callback-link/styles";
 import { toast } from "react-hot-toast";
+import { api } from "@modules/axios";
+import { preventAuthUsersMiddleware } from "@modules/authentication";
+
+export const getServerSideProps: GetServerSideProps<{}> =
+  preventAuthUsersMiddleware(async context => {
+    if (!context.query?.code) {
+      return {
+        redirect: {
+          destination: "/activity",
+          permanent: false,
+        },
+      };
+    }
+
+    return { props: {} };
+  });
 
 interface PageProps {}
-
-// export const getServerSideProps: GetServerSideProps<{}> = async context => {
-//   return {};
-// };
 
 const Page: NextPageWithLayout<PageProps> = ({}) => {
   const router = useRouter();
@@ -20,8 +31,8 @@ const Page: NextPageWithLayout<PageProps> = ({}) => {
   useEffect(() => {
     if (router.query.code) {
       (async () => {
-        const result = await axios.patch(
-          `http://localhost:5000/accounts/${router.query.code}`,
+        const result = await api.patch(
+          `/accounts/${router.query.code}`,
           {},
           { withCredentials: true },
         );

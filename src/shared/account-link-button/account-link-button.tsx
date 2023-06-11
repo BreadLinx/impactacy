@@ -10,10 +10,10 @@ interface AccountLinkButtonProps
 export const AccountLinkButton: FC<AccountLinkButtonProps> = ({
   icon,
   text,
-  ...rest
+  ...restButtonProps
 }) => {
   return (
-    <S.Button {...rest}>
+    <S.Button {...restButtonProps}>
       {icon}
       <strong>{text}</strong>
     </S.Button>

@@ -1,14 +1,15 @@
 import type { AppProps } from "next/app";
-import GlobalStyle from "styles/globalStyles";
-import { NextPageWithLayout } from "types/types";
+import GlobalStyle from "core/styles/global-styles";
+import { IUser, NextPageWithLayout } from "@app-types";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import { ThemeProvider as MuiThemeProvider, CssBaseline } from "@mui/material";
 import { ThemeProvider } from "styled-components";
-import { lightMuiTheme } from "styles/mui-themes/lightTheme";
+import { lightMuiTheme } from "core/styles/mui-themes/light.theme";
 import createCache from "@emotion/cache";
 import { FC } from "react";
 import { Toaster } from "react-hot-toast";
-import { lightStyledTheme } from "styles/styled-themes/lightTheme";
+import { lightStyledTheme } from "core/styles/styled-themes/light.theme";
+import { useRouter } from "next/router";
 
 const createEmotionCache = () => {
   return createCache({ key: "css", prepend: true });

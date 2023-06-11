@@ -15,21 +15,21 @@ const createEmotionCache = () => {
 };
 
 export default class MyDocument extends Document {
-  static async getInitialProps(ctx: DocumentContext) {
+  static async getInitialProps(contex: DocumentContext) {
     const sheet = new ServerStyleSheet();
-    const originalRenderPage = ctx.renderPage;
+    const originalRenderPage = contex.renderPage;
 
     const cache = createEmotionCache();
     const { extractCriticalToChunks } = createEmotionServer(cache);
 
     try {
-      ctx.renderPage = () =>
+      contex.renderPage = () =>
         originalRenderPage({
           enhanceApp: (App: any) => props =>
             sheet.collectStyles(<App emotionCache={cache} {...props} />),
         });
 
-      const initialProps = await Document.getInitialProps(ctx);
+      const initialProps = await Document.getInitialProps(contex);
       const emotionStyles = extractCriticalToChunks(initialProps.html);
       const emotionStyleTags = emotionStyles.styles.map(style => (
         <style

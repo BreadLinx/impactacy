@@ -1,1 +1,0 @@
-export { SideMenuProfile } from "./SideMenuProfile";

@@ -1,22 +1,17 @@
 import Head from "next/head";
 import { GetServerSideProps } from "next";
 import { ReactElement } from "react";
-import { NextPageWithLayout } from "types/types";
-import { MainLayout } from "layouts/MainLayout";
+import { IUser, NextPageWithLayout } from "@app-types";
+import { MainLayout } from "layouts/main-layout";
+import { getServerUser } from "@modules/authentication";
+import { TRequestType } from "@app-types";
+import { checkAuthMiddleware } from "@modules/authentication";
 
-export const getServerSideProps: GetServerSideProps<{}> = async context => {
-  // const session = await getServerSession(context.req, context.res, authOptions);
-  // if (!session?.user.email) {
-  //   return {
-  //     redirect: {
-  //       destination: "/activity",
-  //       permanent: false,
-  //     },
-  //   };
-  // }
-
-  return { props: {} };
-};
+export const getServerSideProps: GetServerSideProps<{}> = checkAuthMiddleware(
+  async (context, user) => {
+    return { props: {} };
+  },
+);
 
 interface PageProps {
   posts: { title: string; body: string; id: string }[];

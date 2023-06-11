@@ -1,12 +1,13 @@
 import { ReactElement } from "react";
 import { useRouter } from "next/router";
-import { NextPageWithLayout, IUser, IActivity } from "types/types";
-import { MainLayout } from "layouts/MainLayout";
+import { NextPageWithLayout, IUser, IActivity } from "@app-types";
+import { MainLayout } from "layouts/main-layout";
 import Head from "next/head";
 import { GetServerSideProps } from "next";
-import { ActivityCard } from "widgets/ActivityCard/ActivityCard";
-import { ProfileSection } from "widgets/ProfileSection";
-import { ProfilePageTabs } from "features/ProfilePageTabs";
+import { ActivityCard } from "widgets/activity-card/activity-card";
+import { ProfileSection } from "widgets/profile-section";
+import { ProfilePageTabs } from "features/profile-page-tabs";
+import { getServerUser } from "core/modules/authentication";
 
 interface PageProps {
   user: IUser;

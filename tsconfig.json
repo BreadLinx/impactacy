@@ -17,6 +17,11 @@
     "baseUrl": "./src",
     "paths": {
       "@pages-styles/*": ["styles/pages-styles/*"],
+      "@app-types": ["core/types/index"],
+      "@modules/*": ["core/modules/*"],
+      "@helpers/*": ["core/helpers/*"],
+      "@hooks/*": ["core/hooks/*"],
+      "@constants": ["core/constants"],
       "*": ["*"]
     }
   },

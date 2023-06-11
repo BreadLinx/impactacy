@@ -1,59 +1,17 @@
 import { GetServerSideProps } from "next";
-import { FC, ReactElement } from "react";
-import { getServerSession } from "next-auth";
-import { MainLayout } from "layouts/MainLayout";
-import { NextPageWithLayout } from "types/types";
-import { useAuth } from "modules/auth";
+import { ReactElement } from "react";
+import { MainLayout } from "layouts/main-layout";
+import { NextPageWithLayout } from "@app-types";
+import { useAuth } from "core/modules/authentication";
+import { checkAuthMiddleware } from "@modules/authentication";
+
+export const getServerSideProps: GetServerSideProps<{}> = checkAuthMiddleware(
+  async (context, user) => {
+    return { props: {} };
+  },
+);
 
 interface PageProps {}
-
-export const getServerSideProps: GetServerSideProps<{
-  // user: IUser;
-  // userActivities: IActivity[];
-}> = async context => {
-  const { profileId } = context.query;
-
-  // const res = await fetch(`http://localhost:5000/users/${profileId}`, {
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  // });
-  // const data = (await res.json()) as
-  //   | { success: false; message: string }
-  //   | { success: true; data: IUser };
-
-  // const activitiesRes = await fetch(
-  //   `http://localhost:5000/user-activities/${profileId}`,
-  // );
-  // const activitiesData = (await activitiesRes.json()) as
-  //   | { success: false; message: string }
-  //   | { success: true; data: IActivity[] };
-
-  // if (!data.success && data.message === "User not found") {
-  //   return {
-  //     redirect: {
-  //       destination: "/404",
-  //       permanent: false,
-  //     },
-  //   };
-  // }
-
-  // if (!data.success && data.message === "User not found") {
-  // }
-
-  // if (!data.success || !activitiesData.success) {
-  //   return {
-  //     redirect: {
-  //       destination: "/404",
-  //       permanent: false,
-  //     },
-  //   };
-  // }
-
-  return {
-    props: {},
-  };
-};
 
 const Page: NextPageWithLayout<PageProps> = ({}) => {
   const { session } = useAuth();

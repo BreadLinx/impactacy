@@ -1,7 +1,15 @@
 import Head from "next/head";
 import { ReactElement } from "react";
-import { NextPageWithLayout } from "types/types";
-import { MainLayout } from "layouts/MainLayout";
+import { NextPageWithLayout } from "@app-types";
+import { MainLayout } from "layouts/main-layout";
+import { GetServerSideProps } from "next";
+import { checkAuthMiddleware } from "@modules/authentication";
+
+export const getServerSideProps: GetServerSideProps<{}> = checkAuthMiddleware(
+  async (context, user) => {
+    return { props: {} };
+  },
+);
 
 interface PageProps {}
 
